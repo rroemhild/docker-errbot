@@ -10,6 +10,7 @@
 
 ```
 $ mkdir /tmp/errbot /tmp/errbot/ssl /tmp/errbot/data /tmp/errbot/plugins
+chmod -R 777 /tmp/errbot
 ```
 
 ## Get the config template and make your settings
