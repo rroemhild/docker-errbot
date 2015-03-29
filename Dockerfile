@@ -1,13 +1,21 @@
 # Err - the pluggable chatbot
 
-FROM ubuntu:trusty
+FROM debian:jessie
 
 MAINTAINER Rafael Römhild <rafael@roemhild.de>
 
-RUN apt-get -qq update
-RUN DEBIAN_FRONTEND=noninteractive apt-get -qqy install curl python3-pyasn1 python3-dnspython python3-openssl git
-RUN curl -sL https://bootstrap.pypa.io/get-pip.py | python3 -
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get -qq update && \
+    apt-get -qqy install \
+        dnsutils \
+        git \
+        python3-dnspython \
+        python3-openssl \
+        python3-pip \
+        python3-pyasn1
 RUN pip3 install err sleekxmpp irc pyasn1-modules
+## pytz for err-time
 
 RUN groupadd -r err && \
     useradd -r -g err -d /srv -s /sbin/nologin -c "ErrBot" err
