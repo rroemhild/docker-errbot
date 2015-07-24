@@ -1,4 +1,4 @@
-err
+err==2.2.1
 sleekxmpp
 irc
 pyasn1-modules
