@@ -16,11 +16,33 @@
 #                                                                        #
 ##########################################################################
 
+import os
 import logging
 
 ##########################################################################
 # Core Err configuration                                                 #
 ##########################################################################
+
+# BACKEND selection.
+# This configures the type of chat server you which to use Err with.
+#
+# The current choices:
+
+# Debug backends to test your plugins manually:
+# 'Text'     - on the text console
+# 'Graphic'  - in a GUI window
+
+# Commercial backends:
+# 'Campfire' - see https://campfirenow.com/
+# 'Hipchat'  - see https://www.hipchat.com/
+# 'Slack'    - see https://slack.com/
+
+# Open protocols:
+# 'TOX'      - see https://tox.im/
+# 'IRC'      - for classic IRC or bridged services like https://gitter.im
+# 'XMPP'
+
+BACKEND = os.environ.get('BACKEND', 'XMPP')
 
 # The location where all of Err's data should be stored. Make sure to set
 # this to a directory that is writable by the user running the bot.
@@ -33,6 +55,20 @@ BOT_DATA_DIR = '/srv/data'
 # plugins inside this directory.
 BOT_EXTRA_PLUGIN_DIR = '/srv/plugins'
 
+# If you use an external backend as a plugin,
+# this is where you tell err where to find it.
+BOT_EXTRA_BACKEND_DIR = '/srv/errbackends'
+
+# Should plugin dependencies be installed automatically? If this is true
+# then Err will use pip to install any missing dependencies automatically.
+#
+# If you have installed Err in a virtualenv, this will run the equivalent
+# of `pip install -r requirements.txt`.
+# If no virtualenv is detected, the equivalent of `pip install --user -r
+# requirements.txt` is used to ensure the package(s) is/are only installed for
+# the user running Err.
+AUTOINSTALL_DEPS = True
+
 # The location of the log file. If you set this to None, then logging will
 # happen to console only.
 BOT_LOG_FILE = '/srv/err.log'
@@ -44,7 +80,7 @@ BOT_LOG_FILE = '/srv/err.log'
 # If you encounter any issues with Err, please set your log level to
 # logging.DEBUG and attach a log with your bug report to aid the developers
 # in debugging the issue.
-BOT_LOG_LEVEL = logging.INFO
+BOT_LOG_LEVEL = logging.getLevelName(os.environ.get('BOT_LOG_LEVEL', 'INFO'))
 
 # Enable logging to sentry (find out more about sentry at www.getsentry.com).
 # This is optional and disabled by default.
@@ -61,23 +97,65 @@ BOT_ASYNC = True
 # Account and chatroom (MUC) configuration                               #
 ##########################################################################
 
+BOT_IDENTITY = {}
+
+# username
+if 'BOT_USERNAME' in os.environ:
+    BOT_IDENTITY['username'] = os.environ['BOT_USERNAME']
+
+# password
+if 'BOT_PASSWORD' in os.environ:
+    BOT_IDENTITY['password'] = os.environ['BOT_PASSWORD']
+
+# server
+if 'BOT_SERVER' in os.environ:
+    if ':' in os.environ['BOT_SERVER']:
+        # xmpp server port
+        BOT_IDENTITY['server'] = tuple(os.environ['BOT_SERVER'].split(':'))
+    else:
+        # irc server
+        BOT_IDENTITY['server'] = os.environ['BOT_SERVER']
+
+# token
+if 'BOT_TOKEN' in os.environ:
+    BOT_IDENTITY['token'] = os.environ['BOT_TOKEN']
+
+# endpoint
+if 'BOT_ENDPOINT' in os.environ:
+    BOT_IDENTITY['endpoint'] = os.environ['BOT_ENDPOINT']
+
+# nickname
+if 'BOT_NICKNAME' in os.environ:
+    BOT_IDENTITY['nickname'] = os.environ['BOT_NICKNAME']
+
+# port
+if 'BOT_PORT' in os.environ:
+    BOT_IDENTITY['port'] = os.environ['BOT_PORT']
+
+# ssl
+if 'BOT_SSL' in os.environ:
+    BOT_IDENTITY['ssl'] = os.environ['BOT_SSL']
+
 # The identity, or credentials, used to connect to a server
-BOT_IDENTITY = {
+# BOT_IDENTITY = {
     # XMPP (Jabber) mode
-    'username': 'err@localhost',  # The JID of the user you have created for the bot
-    'password': 'changeme',       # The corresponding password for this user
+    # 'username': 'err@localhost',  # The JID of the user you have created for the bot
+    # 'password': 'changeme',       # The corresponding password for this user
+    # 'server': ('host.domain.tld',5222), # server override
 
     ## HipChat mode (Comment the above if using this mode)
     # 'username' : '12345_123456@chat.hipchat.com',
     # 'password' : 'changeme',
     ## Group admins can create/view tokens on the settings page after logging
     ## in on HipChat's website
-    # 'token' : 'ed4b74d62833267d98aa99f312ff04',
+    # 'token'    : 'ed4b74d62833267d98aa99f312ff04',
+    ## If you're using HipChat server (self-hosted HipChat) then you should set
+    ## the endpoint below. If you don't use HipChat server but use the hosted version
+    ## of HipChat then you may leave this commented out.
+    # 'endpoint' : 'https://api.hipchat.com'
 
-    ## Campfire mode (Comment the others above if using this mode)
-    # 'subdomain': 'yatta',
-    # 'username' : 'errbot',
-    # 'password' : 'changeme',
+    ## Slack Mode (comment the others above if using this mode)
+    # 'token': 'xoxb-4426949411-aEM7...',
 
     ## IRC mode (Comment the others above if using this mode)
     # 'nickname' : 'err-chatbot',
@@ -86,28 +164,36 @@ BOT_IDENTITY = {
     # 'server' : 'irc.freenode.net',
     # 'port': 6667,                  # optional
     # 'ssl': False,                  # optional
-}
+# }
+
+## TOX Mode
+# TOX_BOOTSTRAP_SERVER = ["54.199.139.199", 33445, "7F9C31FE850E97CEFD4C4591DF93FC757C7C12549DDD55F8EEAECC34FE76C029"]
 
 # Set the admins of your bot. Only these users will have access
 # to the admin-only commands.
 #
-# Note: With campfire this should be the full name of a person, like so:
+# Campfire syntax is the full name:
 # BOT_ADMINS = ('Guillaume Binet',)
 #
-BOT_ADMINS = ('gbin@localhost',)
-
+# TOX syntax is a hash.
+# BOT_ADMINS = ['F9886B47503FB80E6347CC0907D8000144305796DE54693253AA5E574E5E8106C7D002557189', ]
+BOT_ADMINS = tuple(
+    os.environ.get('BOT_ADMINS', 'admin@localhost').split(','),
+)
 # Chatrooms your bot should join on startup. For the IRC backend you
 # should include the # sign here. For XMPP rooms that are password
 # protected, you can specify another tuple here instead of a string,
 # using the format (RoomName, Password).
-CHATROOM_PRESENCE = ('err@conference.server.tld',)
-
+CHATROOM_PRESENCE = tuple(
+    os.environ.get('CHATROOM_PRESENCE',
+                   'err@conference.localhost').split(','),
+)
 # The FullName, or nickname, your bot should use. What you set here will
 # be the nickname that Err shows in chatrooms. Note that some XMPP
 # implementations, notably HipChat, are very picky about what name you
 # use. In the case of HipChat, make sure this matches exactly with the
 # name you gave the user.
-CHATROOM_FN = 'Err'
+CHATROOM_FN = os.environ.get('CHATROOM_FN', 'Err')
 
 ##########################################################################
 # Prefix configuration                                                   #
@@ -120,7 +206,7 @@ CHATROOM_FN = 'Err'
 # If the prefix is changed from the default, the help strings will be
 # automatically adjusted for you.
 #
-BOT_PREFIX = '!'
+BOT_PREFIX = os.environ.get('BOT_PREFIX', '!')
 
 # Uncomment the following and set it to True if you want the prefix to be
 # optional for normal chat.
@@ -213,7 +299,12 @@ REVERSE_CHATROOM_RELAY = {}
 # change this depending on your environment. Setting this to None disables
 # certificate validation, which can be useful if you have a self-signed
 # certificate for example.
-#XMPP_CA_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt"
+XMPP_CA_CERT_FILE = None
+if 'XMPP_CA_CERT_FILE' in os.environ:
+    if 'default' == os.environ['XMPP_CA_CERT_FILE'].lower():
+        XMPP_CA_CERT_FILE = '/etc/ssl/certs/ca-certificates.crt'
+    else:
+        XMPP_CA_CERT_FILE = os.environ['XMPP_CA_CERT_FILE']
 
 # Influence the security methods used on connection with XMPP-based
 # backends. You can use this to work around authentication issues with
@@ -237,8 +328,11 @@ REVERSE_CHATROOM_RELAY = {}
 # try to gradually lower this value until it no longer happens.
 #XMPP_KEEPALIVE_INTERVAL = 300
 
-# Message rate limiting for the IRC backend.
-# Rate limiter for regular channel messages, set to None to disable limits.
-#IRC_CHANNEL_RATE = 1
-# Rate limiter for private messages, set to None to disable limits.
-#IRC_PRIVATE_RATE = 1
+# Message rate limiting for the IRC backend. This will delay subsequent
+# messages by this many seconds (floats are supported). Setting these
+# to a value of 0 effectively disables rate limiting.
+#IRC_CHANNEL_RATE = 1  # Regular channel messages
+#IRC_PRIVATE_RATE = 1  # Private messages
+
+# Allow messages sent in a chatroom to be directed at requester.
+#GROUPCHAT_NICK_PREFIXED = False

@@ -1,0 +1,4 @@
+err
+sleekxmpp
+irc
+pyasn1-modules
