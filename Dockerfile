@@ -6,7 +6,7 @@ MAINTAINER Rafael Römhild <rafael@roemhild.de>
 
 ENV ERR_USER err
 ENV DEBIAN_FRONTEND noninteractive
-ENV PATH /srv/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ENV PATH /app/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Set default locale for the environment
 ENV LC_ALL C.UTF-8
@@ -38,16 +38,16 @@ RUN apt-get update \
     && pip3 install virtualenv \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /srv/data /srv/plugins /srv/errbackends \
-    && chown -R $ERR_USER: /srv
+RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
+    && chown -R $ERR_USER: /srv /app
 
 USER $ERR_USER
 WORKDIR /srv
 
-COPY requirements.txt /srv/requirements.txt
+COPY requirements.txt /app/requirements.txt
 
-RUN virtualenv --system-site-packages -p python3 /srv/venv
-RUN /srv/venv/bin/pip3 install --no-cache-dir -r requirements.txt
+RUN virtualenv --system-site-packages -p python3 /app/venv
+RUN /app/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt
 
 COPY config.py /srv/config.py
 
@@ -55,4 +55,4 @@ EXPOSE 3142
 VOLUME ["/srv"]
 
 CMD ["-c", "/srv"]
-ENTRYPOINT ["/srv/venv/bin/err.py"]
+ENTRYPOINT ["/app/venv/bin/err.py"]
