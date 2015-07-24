@@ -29,10 +29,11 @@ docker run -d \
     -e CHATROOM_PRESENCE=err@conference.xmpp.local \
     -e "TZ=Europe/Berlin" \
     rroemhild/err
+```
 
 ## Volume
 
-`/srv` is exposed as a volume for config, log, plugin and data.
+```/srv``` is exposed as a volume for config, log, plugin and data.
 
 ### Create the directories for the volume
 
