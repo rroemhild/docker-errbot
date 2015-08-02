@@ -54,5 +54,5 @@ COPY config.py /srv/config.py
 EXPOSE 3142
 VOLUME ["/srv"]
 
-CMD ["-c", "/srv"]
+CMD ["-c", "/srv/config.py"]
 ENTRYPOINT ["/app/venv/bin/err.py"]

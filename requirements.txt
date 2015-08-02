@@ -1,4 +1,4 @@
-err==2.2.1
+https://github.com/gbin/err/archive/master.zip
 sleekxmpp
 irc
 pyasn1-modules
