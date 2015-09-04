@@ -1,4 +1,6 @@
 err==3.0.3
 sleekxmpp
-irc
 pyasn1-modules
+irc
+hypchat
+slackclient
