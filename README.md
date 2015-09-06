@@ -6,17 +6,23 @@
 
 See [config-template.py](https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py) for settings documentation.
 
-Environment       | Default
------------------ | -----------
-BACKEND           | XMPP
-BOT_LOG_LEVEL     | INFO
-BOT_USERNAME      |
-BOT_PASSWORD      |
-BOT_SERVER        |
-BOT_ADMINS        | admin@localhost
-CHATROOM_PRESENCE | err@conference.localhost
-CHATROOM_FN       | Err
-XMPP_CA_CERT_FILE | None
+Environment       | Default                      | Description
+----------------- | ---------------------------- | --------------------
+BACKEND           | XMPP                         | Chat server type. (XMPP, Text, HipChat, Slack, IRC)
+BOT_LOG_LEVEL     | INFO                         | Change log level
+BOT_USERNAME      |                              | The JID of the user
+BOT_PASSWORD      |                              | The corresponding password for the user
+BOT_TOKEN         |                              | Token for HipChat and Slack backend
+BOT_SERVER        |                              | Server address for XMPP and HipChat
+BOT_PORT          |                              | Server port
+BOT_SSL           | false                        | IRC Backend: Use SSL
+BOT_ENDPOINT      |                              | HipChat endpoint for hosted HipChat
+BOT_NICKNAME      |                              | IRC Backend: Nickname
+BOT_ADMINS        | admin@localhost              | Bot admins seperated with comma
+CHATROOM_PRESENCE | err@conference.localhost     | The FullName, or nickname, your bot should use
+CHATROOM_FN       | Err                          | Chatrooms your bot should join on startup
+XMPP_CA_CERT_FILE | None                         | Path to a file containing certificate authorities
+BOT_PREFIX        | !                            | Command prefix
 
 ## Quickstart example
 
