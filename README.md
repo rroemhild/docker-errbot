@@ -18,11 +18,19 @@ BOT_PORT          |                              | Server port
 BOT_SSL           | false                        | IRC Backend: Use SSL
 BOT_ENDPOINT      |                              | HipChat endpoint for hosted HipChat
 BOT_NICKNAME      |                              | IRC Backend: Nickname
-BOT_ADMINS        | admin@localhost              | Bot admins seperated with comma
+BOT_ADMINS        | admin@localhost              | Bot admins separated with comma
 CHATROOM_PRESENCE | err@conference.localhost     | The FullName, or nickname, your bot should use
 CHATROOM_FN       | Err                          | Chatrooms your bot should join on startup
 XMPP_CA_CERT_FILE | None                         | Path to a file containing certificate authorities
 BOT_PREFIX        | !                            | Command prefix
+BOT_PREFIX_OPTIONAL_ON_CHAT | False              | Optional prefix for normal chat
+BOT_ALT_PREFIXES            |                    | Alternative prefixes
+BOT_ALT_PREFIX_SEPARATORS   |                    | Alternative prefixes separators
+BOT_ALT_PREFIX_CASEINSENSITIVE | False           | Require correct capitalization
+HIDE_RESTRICTED_COMMANDS    | False              | Hide the restricted commands from the help output
+HIDE_RESTRICTED_ACCESS      | False              | Do not reply error message
+DIVERT_TO_PRIVATE           |                    | Private commands
+MESSAGE_SIZE_LIMIT          | 10000              | Maximum length a single message may be
 
 ## Quickstart example
 
