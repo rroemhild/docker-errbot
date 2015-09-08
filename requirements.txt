@@ -1,4 +1,6 @@
 https://github.com/gbin/err/archive/master.zip
 sleekxmpp
-irc
 pyasn1-modules
+irc
+hypchat
+slackclient

@@ -110,10 +110,9 @@ if 'BOT_PASSWORD' in os.environ:
 # server
 if 'BOT_SERVER' in os.environ:
     if ':' in os.environ['BOT_SERVER']:
-        # xmpp server port
-        BOT_IDENTITY['server'] = tuple(os.environ['BOT_SERVER'].split(':'))
+        server, port = os.environ['BOT_SERVER'].split(':')
+        BOT_IDENTITY['server'] = (server, int(port))
     else:
-        # irc server
         BOT_IDENTITY['server'] = os.environ['BOT_SERVER']
 
 # token
@@ -212,12 +211,16 @@ BOT_PREFIX = os.environ.get('BOT_PREFIX', '!')
 # optional for normal chat.
 # (Meaning messages sent directly to the bot as opposed to within a MUC)
 #BOT_PREFIX_OPTIONAL_ON_CHAT = False
+BOT_PREFIX_OPTIONAL_ON_CHAT = bool(
+    os.environ.get('BOT_PREFIX_OPTIONAL_ON_CHAT', False)
+)
 
 # You might wish to have your bot respond by being called with certain
 # names, rather than the BOT_PREFIX above. This option allows you to
 # specify alternative prefixes the bot will respond to in addition to
 # the prefix above.
 #BOT_ALT_PREFIXES = ('Err',)
+BOT_ALT_PREFIXES = os.environ.get('BOT_ALT_PREFIXES', ())
 
 # If you use alternative prefixes, you might want to allow users to insert
 # separators like , and ; between the prefix and the command itself. This
@@ -228,11 +231,17 @@ BOT_PREFIX = os.environ.get('BOT_PREFIX', '!')
 # Note: There's no need to add spaces to the separators here
 #
 #BOT_ALT_PREFIX_SEPARATORS = (':', ',', ';')
+BOT_ALT_PREFIX_SEPARATORS = tuple(
+    os.environ.get('BOT_ALT_PREFIX_SEPARATORS', '').split(','),
+)
 
 # Continuing on this theme, you might want to permit your users to be
 # lazy and not require correct capitalization, so they can do 'Err',
 # 'err' or even 'ERR'.
 #BOT_ALT_PREFIX_CASEINSENSITIVE = True
+BOT_ALT_PREFIX_CASEINSENSITIVE = bool(
+    os.environ.get('BOT_ALT_PREFIX_CASEINSENSITIVE', False)
+)
 
 ##########################################################################
 # Access controls and message diversion                                  #
@@ -260,15 +269,24 @@ BOT_PREFIX = os.environ.get('BOT_PREFIX', '!')
 # Uncomment and set this to True to hide the restricted commands from
 # the help output.
 #HIDE_RESTRICTED_COMMANDS = False
+HIDE_RESTRICTED_COMMANDS = bool(
+    os.environ.get('HIDE_RESTRICTED_COMMANDS', False)
+)
 
 # Uncomment and set this to True to ignore commands from users that have no
 # access for these instead of replying with error message.
 #HIDE_RESTRICTED_ACCESS = False
+HIDE_RESTRICTED_ACCESS = bool(
+    os.environ.get('HIDE_RESTRICTED_ACCESS', False)
+)
 
 # A list of commands which should be responded to in private, even if
 # the command was given in a MUC. For example:
 # DIVERT_TO_PRIVATE = ('help', 'about', 'status')
-DIVERT_TO_PRIVATE = ()
+#DIVERT_TO_PRIVATE = ()
+DIVERT_TO_PRIVATE = tuple(
+    os.environ.get('DIVERT_TO_PRIVATE', '').split(','),
+)
 
 # Chat relay
 # Can be used to relay one to one message from specific users to the bot
@@ -291,6 +309,7 @@ REVERSE_CHATROOM_RELAY = {}
 # send a message longer than this length, it will be broken up into multiple
 # shorter messages that do fit.
 #MESSAGE_SIZE_LIMIT = 10000
+MESSAGE_SIZE_LIMIT = int(os.environ.get('MESSAGE_SIZE_LIMIT', 10000))
 
 # XMPP TLS certificate verification. In order to validate offered certificates,
 # you must supply a path to a file containing certificate authorities. By
