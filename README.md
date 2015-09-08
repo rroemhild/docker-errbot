@@ -2,6 +2,12 @@
 
 [Err](http://errbot.net) - the pluggable chatbot
 
+## Image runtime config
+
+Environment       | Default                       | Description
+----------------- | ----------------------------- | ----------------
+WAIT              | None                          | Seconds to sleep before starting the bot
+
 ## Bot runtime config
 
 See [config-template.py](https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py) for settings documentation.
