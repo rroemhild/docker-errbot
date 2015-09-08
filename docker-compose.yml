@@ -1,0 +1,30 @@
+err:
+  image: rroemhild/err
+  links:
+    - ejabberd
+  environment:
+    - WAIT=15
+    - BOT_USERNAME=err@xmpp.local
+    - BOT_PASSWORD=errtest
+    - BOT_SERVER=ejabberd.docker:5222
+    - BOT_ADMINS=admin@xmpp.local
+    - CHATROOM_PRESENCE=err@conference.xmpp.local
+  dns: 172.17.42.1
+
+ejabberd:
+  image: rroemhild/ejabberd
+  ports:
+      - 5222:5222
+      - 5080:5080
+  environment:
+    - EJABBERD_ADMIN=admin@xmpp.local
+    - EJABBERD_USERS=admin@xmpp.local:lasHyojbylfiv2 err@xmpp.local:errtest
+    - XMPP_DOMAIN=xmpp.local
+    - ERLANG_NODE=ejabberd
+
+dnsdock:
+  image: tonistiigi/dnsdock
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - 172.17.42.1:53:53/udp

@@ -51,6 +51,13 @@ docker run -d \
     rroemhild/err
 ```
 
+## Docker Compose quick start
+
+```
+$ wget https://raw.githubusercontent.com/rroemhild/docker-err/master/docker-compose.yml
+$ docker-compose up
+```
+
 ## Volume
 
 ```/srv``` is exposed as a volume for config, log, plugin and data.
