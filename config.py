@@ -232,7 +232,7 @@ BOT_ALT_PREFIXES = os.environ.get('BOT_ALT_PREFIXES', ())
 #
 #BOT_ALT_PREFIX_SEPARATORS = (':', ',', ';')
 BOT_ALT_PREFIX_SEPARATORS = tuple(
-    os.environ.get('BOT_ALT_PREFIX_SEPARATORS', ()).split(','),
+    os.environ.get('BOT_ALT_PREFIX_SEPARATORS', '').split(','),
 )
 
 # Continuing on this theme, you might want to permit your users to be
@@ -285,7 +285,7 @@ HIDE_RESTRICTED_ACCESS = bool(
 # DIVERT_TO_PRIVATE = ('help', 'about', 'status')
 #DIVERT_TO_PRIVATE = ()
 DIVERT_TO_PRIVATE = tuple(
-    os.environ.get('DIVERT_TO_PRIVATE', ()).split(','),
+    os.environ.get('DIVERT_TO_PRIVATE', '').split(','),
 )
 
 # Chat relay
