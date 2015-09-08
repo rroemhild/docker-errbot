@@ -3,7 +3,7 @@ err:
   links:
     - ejabberd
   environment:
-    - WAIT=15
+    - WAIT=20
     - BOT_USERNAME=err@xmpp.local
     - BOT_PASSWORD=errtest
     - BOT_SERVER=ejabberd.docker:5222
