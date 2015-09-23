@@ -1,44 +1,23 @@
-# docker-err
+# rroemhild/err
 
-[Err](http://errbot.net) - the pluggable chatbot
+- [Introduction](#introduction)
+- [Quick Start](#quick-start)
+- [Configuration](#configuration)
+    - [System Runtime Config](#system-runtime-config)
+    - [Bot Runtime Config](#bot-runtime-config)
+- [Persistence](#persistence)
+- [Use your own config file](#use-your-own-config-file)
+- [Run Err with extra arguments](#run-err-with-extra-arguments)
+    - [Alternative config file](#alternative-config-file)
+    - [Err Help](#err-help)
+    - [Run with text debug backend](#run-with-text-debug-backend)
+- [Exposed Ports](#exposed-ports)
 
-## Image runtime config
+# Introduction
 
-Environment       | Default                       | Description
------------------ | ----------------------------- | ----------------
-WAIT              | None                          | Seconds to sleep before starting the bot
+Dockerfile to build an [Err](http://errbot.net) (the pluggable chatbot) container image.
 
-## Bot runtime config
-
-See [config-template.py](https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py) for settings documentation.
-
-Environment       | Default                      | Description
------------------ | ---------------------------- | --------------------
-BACKEND           | XMPP                         | Chat server type. (XMPP, Text, HipChat, Slack, IRC)
-BOT_LOG_LEVEL     | INFO                         | Change log level
-BOT_USERNAME      |                              | The JID of the user
-BOT_PASSWORD      |                              | The corresponding password for the user
-BOT_TOKEN         |                              | Token for HipChat and Slack backend
-BOT_SERVER        |                              | Server address for XMPP and HipChat
-BOT_PORT          |                              | Server port
-BOT_SSL           | false                        | IRC Backend: Use SSL
-BOT_ENDPOINT      |                              | HipChat endpoint for hosted HipChat
-BOT_NICKNAME      |                              | IRC Backend: Nickname
-BOT_ADMINS        | admin@localhost              | Bot admins separated with comma
-CHATROOM_PRESENCE | err@conference.localhost     | The FullName, or nickname, your bot should use
-CHATROOM_FN       | Err                          | Chatrooms your bot should join on startup
-XMPP_CA_CERT_FILE | None                         | Path to a file containing certificate authorities
-BOT_PREFIX        | !                            | Command prefix
-BOT_PREFIX_OPTIONAL_ON_CHAT | False              | Optional prefix for normal chat
-BOT_ALT_PREFIXES            |                    | Alternative prefixes
-BOT_ALT_PREFIX_SEPARATORS   |                    | Alternative prefixes separators
-BOT_ALT_PREFIX_CASEINSENSITIVE | False           | Require correct capitalization
-HIDE_RESTRICTED_COMMANDS    | False              | Hide the restricted commands from the help output
-HIDE_RESTRICTED_ACCESS      | False              | Do not reply error message
-DIVERT_TO_PRIVATE           |                    | Private commands
-MESSAGE_SIZE_LIMIT          | 10000              | Maximum length a single message may be
-
-## Quickstart example
+# Quick Start
 
 ```
 docker run -d \
@@ -51,70 +30,88 @@ docker run -d \
     rroemhild/err
 ```
 
-## Docker Compose quick start
+or try the docker compose example
 
+```bash
+wget https://raw.githubusercontent.com/rroemhild/docker-err/master/docker-compose.yml
+docker-compose up
 ```
-$ wget https://raw.githubusercontent.com/rroemhild/docker-err/master/docker-compose.yml
-$ docker-compose up
-```
 
-## Volume
+# Configuration
 
-```/srv``` is exposed as a volume for config, log, plugin and data.
+## Image Runtime Config
 
-### Create the directories for the volume
+- **WAIT**: Seconds to sleep before starting the bot. Defaults to `None`
 
-```
+## Bot Runtime Config
+
+Below is the complete list of available options that can be used to customize your Err bot. See [config-template.py](https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py) for complete settings documentation.
+
+- **BACKEND**: Chat server type. (XMPP, Text, HipChat, Slack, IRC). Defaults to `XMPP`.
+- **BOT_LOG_LEVEL**: Change log level. Defaults to `INFO`.
+- **BOT_USERNAME**: The UID for the bot user.
+- **BOT_PASSWORD**: The corresponding password for the user.
+- **BOT_TOKEN**: Token for HipChat and Slack backend.
+- **BOT_SERVER**: Server address for XMPP and HipChat.
+- **BOT_PORT**: Server port.
+- **BOT_SSL**: Use SSL for IRC backend. Default to `False`.
+- **BOT_ENDPOINT**: HipChat endpoint for hosted HipChat.
+- **BOT_NICKNAME**: Nickname for IRC backend.
+- **BOT_ADMINS**: Bot admins separated with comma. Defaults to `admin@localhost`.
+- **CHATROOM_PRESENCE**: Chatrooms your bot should join on startup.
+- **CHATROOM_FN**: The FullName, or nickname, your bot should use. Defaults to `Err`.
+- **XMPP_CA_CERT_FILE**: Path to a file containing certificate authorities. Default to `None`.
+- **BOT_PREFIX**: Command prefix for the bot. Default to `!`.
+- **BOT_PREFIX_OPTIONAL_ON_CHAT**: Optional prefix for normal chat. Default to `False`.
+- **BOT_ALT_PREFIXES**: Alternative prefixes.
+- **BOT_ALT_PREFIX_SEPARATORS**: Alternative prefixes separators.
+- **BOT_ALT_PREFIX_CASEINSENSITIVE**:  Require correct capitalization. Defaults to `False`.
+- **HIDE_RESTRICTED_COMMANDS**: Hide the restricted commands from the help output. Defaults to `False`.
+- **HIDE_RESTRICTED_ACCESS**: Do not reply error message. Defaults to `False`.
+- **DIVERT_TO_PRIVATE**: Private commands.
+- **MESSAGE_SIZE_LIMIT**: Maximum length a single message may be. Defaults to `10000`.
+
+# Persistence
+
+For storage of the application data, you should mount a volume at
+
+* `/srv`
+
+Create the directories for the volume
+
+```bash
 mkdir /tmp/errbot /tmp/errbot/ssl /tmp/errbot/data /tmp/errbot/plugins
 chmod -R 777 /tmp/errbot
 ```
 
-## Use your config file
+# Use your own config file
 
-```
-$ curl -sL https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py -o /tmp/errbot/config.py
-```
-
-## Run Err
-
-### Run in foreground
-
-```
-$ docker run -v /tmp/errbot:/srv rroemhild/err
+```bash
+curl -sL https://raw.githubusercontent.com/gbin/err/master/errbot/config-template.py -o /tmp/errbot/config.py
 ```
 
-### Run in background
+# Run Err with extra arguments
 
+If you pass arguments to Err you have to set the `-c /srv/config.py` argument by your self to run with the default config.
+
+## Alternative config file
+
+```bash
+docker run -it -v /tmp/errbot:/srv rroemhild/err -c /srv/production.py
 ```
-$ docker run -d --name err -v /tmp/errbot:/srv rroemhild/err
-```
 
-### Run Err with extra arguments
+## Err Help
 
-If you want to pass arguments to Err you have to set the `-c /srv` argument by your self.
-
-#### Err usage
-
-```
+```bash
 $ docker run rroemhild/err -h
 ```
 
-#### Run with text debug backend
+## Run with text debug backend
 
-```
-$ docker run -it -v /tmp/errbot:/srv rroemhild/err -c /srv -T
-```
-
-#### Run with IRC backend in background
-
-```
-$ docker run -d --name err -v /tmp/errbot:/srv rroemhild/err -c /srv -I
+```bash
+docker run -it -v /tmp/errbot:/srv rroemhild/err -c /srv/config.py -T
 ```
 
-## Exposed Ports
+# Exposed Ports
 
 * 3142 (Webserver if configured)
-
-## Exposed Volumes
-
-* /srv (Bot Data)
