@@ -3,7 +3,7 @@ err:
   links:
     - ejabberd
   environment:
-    - WAIT=20
+    - WAIT=10
     - BOT_USERNAME=err@xmpp.local
     - BOT_PASSWORD=errtest
     - BOT_SERVER=ejabberd.docker:5222
@@ -21,6 +21,7 @@ ejabberd:
     - EJABBERD_USERS=admin@xmpp.local:lasHyojbylfiv2 err@xmpp.local:errtest
     - XMPP_DOMAIN=xmpp.local
     - ERLANG_NODE=ejabberd
+    - SKIP_MODULES_UPDATE=true
 
 dnsdock:
   image: tonistiigi/dnsdock
