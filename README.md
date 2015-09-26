@@ -3,7 +3,7 @@
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
-    - [System Runtime Config](#system-runtime-config)
+    - [Image Runtime Config](#image-runtime-config)
     - [Bot Runtime Config](#bot-runtime-config)
 - [Persistence](#persistence)
 - [Use your own config file](#use-your-own-config-file)
@@ -16,6 +16,8 @@
 # Introduction
 
 Dockerfile to build an [Err](http://errbot.net) (the pluggable chatbot) container image.
+
+Current Version: `3.0.5`
 
 # Quick Start
 
