@@ -18,7 +18,7 @@ ejabberd:
       - 5080:5080
   environment:
     - EJABBERD_ADMIN=admin@xmpp.local
-    - EJABBERD_USERS=admin@xmpp.local:lasHyojbylfiv2 err@xmpp.local:errtest
+    - EJABBERD_USERS=admin@xmpp.local:erradmin err@xmpp.local:errtest
     - XMPP_DOMAIN=xmpp.local
     - ERLANG_NODE=ejabberd
     - SKIP_MODULES_UPDATE=true
