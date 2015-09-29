@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-readonly ERRBIN="/app/venv/bin/err.py"
+readonly ERRBIN="/app/venv/bin/errbot"
 readonly ERRRUN="/srv"
 
 
