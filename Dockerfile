@@ -49,7 +49,7 @@ COPY requirements.txt /app/requirements.txt
 RUN virtualenv --system-site-packages -p python3 /app/venv
 RUN /app/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt
 
-COPY config.py /srv/config.py
+COPY config.py /app/config.py
 COPY run.sh /app/venv/bin/run.sh
 
 EXPOSE 3142

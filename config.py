@@ -220,7 +220,9 @@ BOT_PREFIX_OPTIONAL_ON_CHAT = bool(
 # specify alternative prefixes the bot will respond to in addition to
 # the prefix above.
 #BOT_ALT_PREFIXES = ('Err',)
-BOT_ALT_PREFIXES = os.environ.get('BOT_ALT_PREFIXES', ())
+BOT_ALT_PREFIXES = tuple(
+    os.environ.get('BOT_ALT_PREFIXES', 'Err').split(','),
+)
 
 # If you use alternative prefixes, you might want to allow users to insert
 # separators like , and ; between the prefix and the command itself. This
@@ -232,7 +234,7 @@ BOT_ALT_PREFIXES = os.environ.get('BOT_ALT_PREFIXES', ())
 #
 #BOT_ALT_PREFIX_SEPARATORS = (':', ',', ';')
 BOT_ALT_PREFIX_SEPARATORS = tuple(
-    os.environ.get('BOT_ALT_PREFIX_SEPARATORS', '').split(','),
+    os.environ.get('BOT_ALT_PREFIX_SEPARATORS', ': , ;').split(' '),
 )
 
 # Continuing on this theme, you might want to permit your users to be
