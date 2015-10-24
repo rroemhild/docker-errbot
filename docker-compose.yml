@@ -1,4 +1,5 @@
 err:
+  # build: .
   image: rroemhild/err
   links:
     - ejabberd
