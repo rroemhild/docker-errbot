@@ -1,6 +1,6 @@
-err:
-  # build: .
-  image: rroemhild/err
+errbot:
+  build: .
+  # image: rroemhild/errbot
   links:
     - ejabberd
   environment:
@@ -10,7 +10,7 @@ err:
     - BOT_SERVER=ejabberd.docker:5222
     - BOT_ADMINS=admin@xmpp.local
     - CHATROOM_PRESENCE=err@conference.xmpp.local
-  dns: 172.17.42.1
+  dns: 172.17.0.1
 
 ejabberd:
   image: rroemhild/ejabberd
@@ -29,4 +29,4 @@ dnsdock:
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   ports:
-    - 172.17.42.1:53:53/udp
+    - 172.17.0.1:53:53/udp

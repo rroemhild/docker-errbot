@@ -1,4 +1,4 @@
-# Err - the pluggable chatbot
+# Errbot - the pluggable chatbot
 
 FROM debian:jessie
 
@@ -55,5 +55,4 @@ COPY run.sh /app/venv/bin/run.sh
 EXPOSE 3142
 VOLUME ["/srv"]
 
-CMD ["-c", "/srv/config.py"]
-ENTRYPOINT ["/app/venv/bin/run.sh"]
+CMD ["/app/venv/bin/run.sh"]

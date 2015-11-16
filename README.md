@@ -1,4 +1,4 @@
-# rroemhild/err
+# rroemhild/errbot
 
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
@@ -15,9 +15,9 @@
 
 # Introduction
 
-Dockerfile to build an [Err](http://errbot.net) (the pluggable chatbot) container image.
+Dockerfile to build an [Errbot](http://errbot.io) (the pluggable chatbot) container image.
 
-Current Version: `3.1.1`
+Current Version: `3.2.1`
 
 # Quick Start
 
@@ -94,24 +94,24 @@ curl -sL https://raw.githubusercontent.com/gbin/err/master/errbot/config-templat
 
 # Run Err with extra arguments
 
-If you pass arguments to Err you have to set the `-c /srv/config.py` argument by your self to run with the default config.
+If you pass arguments to Errbot you have to set the `-c /srv/config.py` argument by your self to run with the default config.
 
 ## Alternative config file
 
 ```bash
-docker run -it -v /tmp/errbot:/srv rroemhild/err -c /srv/production.py
+docker run -it -v /tmp/errbot:/srv rroemhild/errbot -c /srv/production.py
 ```
 
 ## Err Help
 
 ```bash
-$ docker run rroemhild/err -h
+$ docker run rroemhild/errbot -h
 ```
 
 ## Run with text debug backend
 
 ```bash
-docker run -it -v /tmp/errbot:/srv rroemhild/err -c /srv/config.py -T
+docker run -it -v /tmp/errbot:/srv rroemhild/errbot -c /srv/config.py -T
 ```
 
 # Exposed Ports
