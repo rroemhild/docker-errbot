@@ -52,7 +52,7 @@ RUN /app/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt
 COPY config.py /app/config.py
 COPY run.sh /app/venv/bin/run.sh
 
-EXPOSE 3142
+EXPOSE 3141 3142
 VOLUME ["/srv"]
 
 CMD ["/app/venv/bin/run.sh"]
