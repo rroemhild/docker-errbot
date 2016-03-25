@@ -4,3 +4,7 @@ pyasn1-modules
 irc
 hypchat
 slackclient
+python-telegram-bot
+feedparser
+beautifulsoup4
+whois
