@@ -17,7 +17,7 @@
 
 Dockerfile to build an [Errbot](http://errbot.io) (the pluggable chatbot) container image.
 
-Current Version: `3.2.4`
+Current Version: `4.0.3`
 
 # Quick Start
 
