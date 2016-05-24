@@ -1,4 +1,4 @@
-errbot==4.0.3
+errbot==4.1.3
 sleekxmpp
 pyasn1-modules
 irc
