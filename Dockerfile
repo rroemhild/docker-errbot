@@ -24,6 +24,7 @@ RUN groupadd -r $ERR_USER \
 RUN apt-get update \
   && apt-get -y install --no-install-recommends \
          git \
+         qalc \
          locales \
          dnsutils \
          python3-dnspython \
