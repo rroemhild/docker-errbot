@@ -8,3 +8,16 @@ python-telegram-bot
 feedparser
 beautifulsoup4
 whois
+gitpython
+jsonpickle
+sqlalchemy
+whoosh
+tvdb_api
+pyfiglet
+pyotp
+qrcode
+twilio
+pyquery
+jira
+IPython
+filemagic
