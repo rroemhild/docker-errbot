@@ -21,3 +21,4 @@ pyquery
 jira
 IPython
 filemagic
+six>=1.9
