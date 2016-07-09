@@ -29,7 +29,7 @@ docker run -d \
     -e BOT_ADMINS=admin@xmpp.local \
     -e CHATROOM_PRESENCE=err@conference.xmpp.local \
     -e "TZ=Europe/Berlin" \
-    rroemhild/err
+    rroemhild/errbot
 ```
 
 or try the docker compose example
