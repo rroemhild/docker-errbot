@@ -87,8 +87,8 @@ BOT_LOG_LEVEL = logging.getLevelName(os.environ.get('BOT_LOG_LEVEL', 'INFO'))
 
 # Enable logging to sentry (find out more about sentry at www.getsentry.com).
 # This is optional and disabled by default.
-BOT_LOG_SENTRY = False
-SENTRY_DSN = ''
+SENTRY_DSN = os.environ.get('SENTRY_DSN', '')
+BOT_LOG_SENTRY = bool(SENTRY_DSN)
 SENTRY_LOGLEVEL = BOT_LOG_LEVEL
 
 # Execute commands in asynchronous mode. In this mode, Err will spawn 3
