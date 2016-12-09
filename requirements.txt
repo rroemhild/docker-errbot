@@ -21,4 +21,5 @@ pyquery
 jira
 IPython
 filemagic
+raven
 six>=1.9
