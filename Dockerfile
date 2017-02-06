@@ -27,7 +27,10 @@ RUN apt-get update \
          qalc \
          locales \
          dnsutils \
+         libssl-dev \
+         build-essential \
          python3-dnspython \
+         python3-dev \
          python3-openssl \
          python3-pip \
          python3-cffi \
@@ -39,6 +42,7 @@ RUN apt-get update \
     && echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
     && locale-gen \
     && pip3 install virtualenv \
+    && pip3 install -U setuptools \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
@@ -49,8 +53,8 @@ WORKDIR /srv
 
 COPY requirements.txt /app/requirements.txt
 
-RUN virtualenv --system-site-packages -p python3 /app/venv
-RUN /app/venv/bin/pip3 install --no-cache-dir -r /app/requirements.txt
+RUN virtualenv /app/venv
+RUN . /app/venv/bin/activate; pip install --no-cache-dir -r /app/requirements.txt
 
 COPY config.py /app/config.py
 COPY run.sh /app/venv/bin/run.sh
