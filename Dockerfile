@@ -18,8 +18,8 @@ RUN groupadd -r $ERR_USER \
     && useradd -r \
        -g $ERR_USER \
        -d /srv \
+       -s /bin/bash \
        $ERR_USER
-
 # Install packages and perform cleanup
 RUN apt-get update \
   && apt-get -y install --no-install-recommends \
@@ -45,11 +45,7 @@ RUN apt-get update \
     && pip3 install -U setuptools \
 	&& rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
-    && chown -R $ERR_USER: /srv /app
-
-USER $ERR_USER
-WORKDIR /srv
+RUN mkdir /app
 
 COPY requirements.txt /app/requirements.txt
 
@@ -58,6 +54,9 @@ RUN . /app/venv/bin/activate; pip install --no-cache-dir -r /app/requirements.tx
 
 COPY config.py /app/config.py
 COPY run.sh /app/venv/bin/run.sh
+
+RUN mkdir /srv/data /srv/plugins /srv/errbackends && chown -R $ERR_USER: /srv /app
+
 
 EXPOSE 3141 3142
 VOLUME ["/srv"]

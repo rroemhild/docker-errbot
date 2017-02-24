@@ -1,40 +1,26 @@
 #!/bin/bash
-set -e
 
 readonly ERRBIN="/app/venv/bin/errbot"
 readonly ERRRUN="/srv"
+readonly ERRUSER="err"
 
 
-is_set() {
-    local var=$1
+for i in data plugins errbackends; do
+  [[ ! -d "${ERRRUN}/${i}" ]] && mkdir "${ERRRUN}/${i}" 
+done
 
-    [[ -n $var ]]
-}
-
-
-file_exist() {
-    local file=$1
-
-    [[ -e $file ]]
-}
-
-
-# if mounted volume is empty create dirs
-if [ ! "$(ls -A ${ERRRUN})" ]; then
-    mkdir "${ERRRUN}/data" "${ERRRUN}/plugins" "${ERRRUN}/errbackends"
-fi
-
-
-# copy default container image config file if not exist on volume
-file_exist ${ERRCONF} \
-    || cp /app/config.py ${ERRRUN}
-
+[[ -z ${ERRCONF} ]] && [[ ! -e "${ERRRUN}/config.py" ]] && cp /app/config.py ${ERRRUN}
 
 # sleep if we need to wait for another container
-if ( is_set ${WAIT} ); then
+if [[ -n ${WAIT} ]]; then
     echo "Sleep ${WAIT} seconds before starting err..."
     sleep ${WAIT}
 fi
 
+chown -R ${ERRUSER} /srv
 
-exec ${ERRBIN} $@
+echo source /app/venv/bin/activate >/srv/.bash_profile
+
+( for i in $(printenv | grep -v root | grep -v -E '\s+'); do  key=$(echo $i | sed 's/=.*//g'); val=$(echo $i | sed 's/.*=\(.*\)/\1/g'); echo "export $key='$val'"; done )>>/srv/.bash_profile
+# copy default container image config file if not exist on volume but is specified
+su - ${ERRUSER} -c "${ERRBIN} $@"
