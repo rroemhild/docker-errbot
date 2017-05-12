@@ -189,7 +189,7 @@ BOT_ADMINS = tuple(
 CHATROOM_PRESENCE = tuple(
     os.environ.get('CHATROOM_PRESENCE',
                    'err@conference.localhost').split(','),
-)
+) if os.environ.get('CHATROOM_PRESENCE') != '' else tuple()
 # The FullName, or nickname, your bot should use. What you set here will
 # be the nickname that Err shows in chatrooms. Note that some XMPP
 # implementations, notably HipChat, are very picky about what name you
