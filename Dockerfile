@@ -43,6 +43,7 @@ RUN apt-get update \
     && locale-gen \
     && pip3 install virtualenv \
     && pip3 install -U setuptools \
+    && pip2 install slackclient \
 	&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
