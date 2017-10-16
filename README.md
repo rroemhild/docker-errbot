@@ -72,6 +72,7 @@ Below is the complete list of available options that can be used to customize yo
 - **HIDE_RESTRICTED_ACCESS**: Do not reply error message. Defaults to `False`.
 - **DIVERT_TO_PRIVATE**: Private commands.
 - **MESSAGE_SIZE_LIMIT**: Maximum length a single message may be. Defaults to `10000`.
+- **BOT_EXTRA_PLUGIN_DIR**: Directory to load extra plugins from
 
 # Persistence
 
