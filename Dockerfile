@@ -43,7 +43,8 @@ RUN apt-get update \
     && locale-gen \
     && pip3 install virtualenv \
     && pip3 install -U setuptools \
-	&& rm -rf /var/lib/apt/lists/*
+	&& rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/cache/apt/archives
 
 RUN mkdir /srv/data /srv/plugins /srv/errbackends /app \
     && chown -R $ERR_USER: /srv /app
