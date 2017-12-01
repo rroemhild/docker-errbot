@@ -1,6 +1,5 @@
 errbot:
   build: .
-  # image: rroemhild/errbot
   links:
     - ejabberd
   environment:
