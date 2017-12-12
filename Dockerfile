@@ -1,6 +1,6 @@
 # Errbot - the pluggable chatbot
 
-FROM debian:jessie
+FROM debian:stretch
 
 MAINTAINER Rafael Römhild <rafael@roemhild.de>
 
