@@ -1,5 +1,7 @@
 # rroemhild/errbot
 
+![Docker Build Status](https://img.shields.io/docker/build/rroemhild/errbot.svg) ![Docker Stars](https://img.shields.io/docker/stars/rroemhild/errbot.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/rroemhild/errbot.svg)
+
 - [Introduction](#introduction)
 - [Quick Start](#quick-start)
 - [Configuration](#configuration)
