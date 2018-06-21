@@ -58,8 +58,7 @@ COPY run.sh /app/venv/bin/run.sh
 
 RUN mkdir /srv/data /srv/plugins /srv/errbackends && chown -R $ERR_USER: /srv /app
 
-
 EXPOSE 3141 3142
 VOLUME ["/srv"]
 
-CMD ["/app/venv/bin/run.sh"]
+ENTRYPOINT ["/app/venv/bin/run.sh"]
