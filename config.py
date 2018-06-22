@@ -186,10 +186,9 @@ BOT_ADMINS = tuple(
 # should include the # sign here. For XMPP rooms that are password
 # protected, you can specify another tuple here instead of a string,
 # using the format (RoomName, Password).
-CHATROOM_PRESENCE = tuple(
-    os.environ.get('CHATROOM_PRESENCE',
-                   'err@conference.localhost').split(','),
-) if os.environ.get('CHATROOM_PRESENCE') != '' else tuple()
+CHATROOM_PRESENCE = tuple(os.environ['CHATROOM_PRESENCE'].split(',')
+                          if os.environ.get('CHATROOM_PRESENCE') else [])
+
 # The FullName, or nickname, your bot should use. What you set here will
 # be the nickname that Err shows in chatrooms. Note that some XMPP
 # implementations, notably HipChat, are very picky about what name you
