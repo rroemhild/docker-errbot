@@ -59,6 +59,13 @@ BOT_EXTRA_PLUGIN_DIR = os.environ.get('BOT_EXTRA_PLUGIN_DIR', '/srv/plugins')
 # this is where you tell err where to find it.
 BOT_EXTRA_BACKEND_DIR = '/srv/errbackends'
 
+# If you want only a subset of the core plugins that are bundled with errbot, you can specify them here.
+# CORE_PLUGINS = None # This is default, all core plugins.
+# For example CORE_PLUGINS = ('ACLs', 'Backup', 'Help') you get those names from the .plug files Name entry.
+# For absolutely no plug: CORE_PLUGINS = ()
+CORE_PLUGINS = tuple(os.environ['CORE_PLUGINS'].split(',')) \
+    if os.environ.get('CORE_PLUGINS') else None
+
 # Should plugin dependencies be installed automatically? If this is true
 # then Err will use pip to install any missing dependencies automatically.
 #
