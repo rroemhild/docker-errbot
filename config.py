@@ -139,7 +139,7 @@ if 'BOT_NICKNAME' in os.environ:
 
 # port
 if 'BOT_PORT' in os.environ:
-    BOT_IDENTITY['port'] = os.environ['BOT_PORT']
+    BOT_IDENTITY['port'] = int(os.environ['BOT_PORT'])
 
 # ssl
 if 'BOT_SSL' in os.environ:
