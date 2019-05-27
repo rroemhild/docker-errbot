@@ -1,6 +1,6 @@
 # Errbot - the pluggable chatbot
 
-FROM debian:stretch
+FROM debian:stretch-slim
 
 MAINTAINER Rafael Römhild <rafael@roemhild.de>
 
